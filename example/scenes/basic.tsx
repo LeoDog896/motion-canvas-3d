@@ -1,19 +1,9 @@
 import { makeScene2D, useScene2D } from "@motion-canvas/2d/lib/scenes";
 import { waitFor } from "@motion-canvas/core/lib/flow";
-import { ThreeCanvas, SignalableObject3D } from "../../src";
+import { ThreeCanvas, axisAngle } from "../../src";
 
 import * as THREE from "three";
 import { easeInOutCubic, tween } from "@motion-canvas/core/lib/tweening";
-
-function axisAngle(
-  axis: THREE.Vector3,
-  angle: number,
-): [number, number, number, number] {
-  let st = Math.sin(angle / 2);
-  let ct = Math.cos(angle / 2);
-
-  return [ct, st * axis.x, st * axis.y, st * axis.z];
-}
 
 export default makeScene2D(function* (view) {
   // Create your animations here
@@ -25,7 +15,7 @@ export default makeScene2D(function* (view) {
   c.camera.position([0, 0, -2]);
   c.camera.quaternion([1, 0, 0, 0]);
 
-  const box = new SignalableObject3D(
+  const [box] = c.push(
     new THREE.Mesh(
       new THREE.BoxGeometry(1, 1, 1),
       new THREE.MeshStandardMaterial({ color: "white" }),
@@ -33,12 +23,10 @@ export default makeScene2D(function* (view) {
   );
 
   box.position([0, 0, 2]);
-  box.addTo(c.scene);
-  c.addDynamicObject(box);
 
   view.add(c);
 
-  c.scene.background = new THREE.Color("rgb(14, 14, 14)");
+  c.threeScene.background = new THREE.Color("rgb(14, 14, 14)");
 
   c.create(() => {
     let light = new THREE.DirectionalLight("green", 1.0);

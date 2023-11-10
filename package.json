@@ -1,26 +1,44 @@
 {
   "name": "motion-canvas-3d",
   "version": "0.1.0",
-  "description": "",
+  "description": "3D renderer for motion-canvas",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/motion-canvas-3d.umd.cjs",
+  "module": "./dist/motion-canvas-3d.js",
+  "types": "./dist/motion-canvas-3d.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/motion-canvas-3d.js",
+      "require": "./dist/motion-canvas-3d.umd.cjs"
+    }
+  },
+  "type": "module",
   "scripts": {
     "example": "vite",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "build": "vite build --config vite.config.lib.ts"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@motion-canvas/ffmpeg": "^1.1.1",
     "@motion-canvas/ui": "^3.11.0",
     "@motion-canvas/vite-plugin": "^3.11.0",
     "@types/three": "^0.158.2",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3",
     "vite-tsconfig-paths": "^4.2.1"
   },
+  "peerDependencies": {
+    "@motion-canvas/2d": "3.x",
+    "@motion-canvas/core": "3.x"
+  },
   "dependencies": {
-    "@motion-canvas/2d": "^3.11.0",
-    "@motion-canvas/core": "^3.11.0",
     "three": "^0.158.0"
   }
 }

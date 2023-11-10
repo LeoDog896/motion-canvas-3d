@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import motionCanvas from "@motion-canvas/vite-plugin";
 import tsconfigPaths from "vite-tsconfig-paths";
+import ffmpeg from "@motion-canvas/ffmpeg";
 import path from "node:path";
 
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
     motionCanvas({
       project: ["./example/project.ts"],
     }),
+    ffmpeg(),
   ],
   resolve: {
     alias: {

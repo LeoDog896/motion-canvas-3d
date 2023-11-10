@@ -7,11 +7,35 @@ export interface ThreeCanvasProps extends NodeProps {
   canvasHeight: number;
 }
 
+/**
+ * Converts an axis and angle to a quaternion.
+ * @param axis The axis to rotate around.
+ * @param angle The angle to rotate by.
+ * @returns The quaternion.
+ */
+export function axisAngle(
+  axis: THREE.Vector3,
+  angle: number,
+): [number, number, number, number] {
+  let st = Math.sin(angle / 2);
+  let ct = Math.cos(angle / 2);
+
+  return [ct, st * axis.x, st * axis.y, st * axis.z];
+}
+
 export class ThreeCanvas extends Node {
   canvas: HTMLCanvasElement;
   renderer: THREE.WebGLRenderer;
 
-  public readonly scene: THREE.Scene;
+  /**
+   * The actual three.js scene itself.
+   * If you need to do something that isn't supported by this class,
+   * you can use this property to access the scene directly.
+   *
+   * However, this may cause mutations, and any features should be requested
+   * as a feature request.
+   */
+  public readonly threeScene: THREE.Scene;
   public readonly threeCamera: THREE.PerspectiveCamera;
   public readonly objects: SignalableObject3D[] = [];
 
@@ -26,7 +50,7 @@ export class ThreeCanvas extends Node {
       canvas: this.canvas,
     });
 
-    this.scene = new THREE.Scene();
+    this.threeScene = new THREE.Scene();
     this.threeCamera = new THREE.PerspectiveCamera(
       75,
       this.canvas.width / this.canvas.height,
@@ -43,13 +67,12 @@ export class ThreeCanvas extends Node {
     return this.objects[0];
   }
 
-  addDynamicObject(o: SignalableObject3D) {
-    this.objects.push(o);
-  }
-
   push(...object: THREE.Object3D[]) {
     const signalable = object.map((o) => new SignalableObject3D(o));
-    this.objects.push(...signalable);
+    for (const obj of signalable) {
+      obj.addTo(this.threeScene);
+      this.addDynamicObject(obj);
+    }
     return signalable;
   }
 
@@ -62,7 +85,7 @@ export class ThreeCanvas extends Node {
       obj.update();
     }
 
-    this.renderer.render(this.scene, this.threeCamera);
+    this.renderer.render(this.threeScene, this.threeCamera);
 
     context.drawImage(
       this.canvas,
@@ -97,10 +120,6 @@ export class SignalableObject3D {
       this.object.quaternion.z,
       this.object.quaternion.w,
     ]);
-  }
-
-  addTo(parent: THREE.Object3D) {
-    parent.add(this.object);
   }
 
   update() {
