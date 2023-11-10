@@ -20,7 +20,8 @@
     "format": "npx prettier . --write",
     "build": "vite build --config vite.config.lib.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepare": "npm run build && npm run lint"
   },
   "keywords": [],
   "author": "",
