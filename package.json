@@ -1,0 +1,24 @@
+{
+  "name": "motion-canvas-3d",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "example": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@motion-canvas/ui": "^3.11.0",
+    "@motion-canvas/vite-plugin": "^3.11.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vite-tsconfig-paths": "^4.2.1"
+  },
+  "dependencies": {
+    "@motion-canvas/2d": "^3.11.0",
+    "@motion-canvas/core": "^3.11.0",
+    "three": "^0.158.0"
+  }
+}
