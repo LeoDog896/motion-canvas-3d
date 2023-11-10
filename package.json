@@ -1,6 +1,6 @@
 {
   "name": "motion-canvas-3d",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "3D renderer for motion-canvas",
   "files": [
     "dist"
@@ -23,8 +23,16 @@
     "lint:fix": "eslint . --fix",
     "prepare": "npm run build && npm run lint"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["motion-canvas", "motion", "canvas", "3d", "three.js"],
+  "homepage": "https://github.com/LeoDog896/motion-canvas-3d#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeoDog896/motion-canvas-3d.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LeoDog896/motion-canvas-3d/issues"
+  },
+  "author": "LeoDog896 <leodog896@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@motion-canvas/2d": "^3.11.0",
