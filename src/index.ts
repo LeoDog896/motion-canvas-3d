@@ -1,10 +1,13 @@
-import { Node, NodeProps } from "@motion-canvas/2d/lib/components";
+import { Node, NodeProps } from "@motion-canvas/2d";
 import { SimpleSignal, createSignal } from "@motion-canvas/core/lib/signals";
 import * as THREE from "three";
 
 export interface ThreeCanvasProps extends NodeProps {
   canvasWidth: number;
   canvasHeight: number;
+  fov?: number;
+  near?: number;
+  far?: number;
 }
 
 /**
@@ -17,8 +20,8 @@ export function axisAngle(
   axis: THREE.Vector3,
   angle: number,
 ): [number, number, number, number] {
-  let st = Math.sin(angle / 2);
-  let ct = Math.cos(angle / 2);
+  const st = Math.sin(angle / 2);
+  const ct = Math.cos(angle / 2);
 
   return [ct, st * axis.x, st * axis.y, st * axis.z];
 }
@@ -52,10 +55,10 @@ export class ThreeCanvas extends Node {
 
     this.threeScene = new THREE.Scene();
     this.threeCamera = new THREE.PerspectiveCamera(
-      75,
+      props.fov ?? 75,
       this.canvas.width / this.canvas.height,
-      0.1,
-      100.0,
+      props.near ?? 0.1,
+      props.far ?? 1000.0,
     );
 
     this.objects.push(new SignalableObject3D(this.threeCamera));
@@ -67,10 +70,14 @@ export class ThreeCanvas extends Node {
     return this.objects[0];
   }
 
+  addDynamicObject(o: SignalableObject3D) {
+    this.objects.push(o);
+  }
+
   push(...object: THREE.Object3D[]) {
     const signalable = object.map((o) => new SignalableObject3D(o));
     for (const obj of signalable) {
-      obj.addTo(this.threeScene);
+      this.threeScene.add(obj.object);
       this.addDynamicObject(obj);
     }
     return signalable;

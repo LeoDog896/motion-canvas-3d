@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     dts({
       insertTypesEntry: true,
-    })
+    }),
   ],
   build: {
     lib: {
@@ -15,7 +15,12 @@ export default defineConfig({
       fileName: "motion-canvas-3d",
     },
     rollupOptions: {
-      external: ["@motion-canvas/core", "@motion-canvas/2d", "three", "@motion-canvas/2d/lib/components"],
-    }
-  }
+      external: [
+        "@motion-canvas/core",
+        "@motion-canvas/2d",
+        "three",
+        "@motion-canvas/2d/lib/components",
+      ],
+    },
+  },
 });

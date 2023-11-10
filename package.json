@@ -18,16 +18,23 @@
   "scripts": {
     "example": "vite",
     "format": "npx prettier . --write",
-    "build": "vite build --config vite.config.lib.ts"
+    "build": "vite build --config vite.config.lib.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@motion-canvas/2d": "^3.11.0",
+    "@motion-canvas/core": "^3.11.0",
     "@motion-canvas/ffmpeg": "^1.1.1",
     "@motion-canvas/ui": "^3.11.0",
     "@motion-canvas/vite-plugin": "^3.11.0",
     "@types/three": "^0.158.2",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",

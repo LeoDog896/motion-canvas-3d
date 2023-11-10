@@ -10,7 +10,7 @@ export default makeScene2D(function* (view) {
 
   const { x: canvasWidth, y: canvasHeight } = useScene2D().getSize();
 
-  let c = new ThreeCanvas({ canvasWidth, canvasHeight });
+  const c = new ThreeCanvas({ canvasWidth, canvasHeight });
 
   c.camera.position([0, 0, -2]);
   c.camera.quaternion([1, 0, 0, 0]);
@@ -29,14 +29,14 @@ export default makeScene2D(function* (view) {
   c.threeScene.background = new THREE.Color("rgb(14, 14, 14)");
 
   c.create(() => {
-    let light = new THREE.DirectionalLight("green", 1.0);
+    const light = new THREE.DirectionalLight("green", 1.0);
     light.position.set(-5, -5, -5);
     light.lookAt(new THREE.Vector3(0, 0, 0));
     return light;
   });
 
   c.create(() => {
-    let light = new THREE.DirectionalLight("blue", 1.0);
+    const light = new THREE.DirectionalLight("blue", 1.0);
     light.position.set(5, 5, -5);
     light.lookAt(new THREE.Vector3(0, 0, 0));
     return light;
