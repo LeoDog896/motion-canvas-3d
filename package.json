@@ -4,14 +4,16 @@
   "description": "",
   "scripts": {
     "example": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "npx prettier . --write"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@motion-canvas/ui": "^3.11.0",
     "@motion-canvas/vite-plugin": "^3.11.0",
+    "@types/three": "^0.158.2",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "vite-tsconfig-paths": "^4.2.1"
