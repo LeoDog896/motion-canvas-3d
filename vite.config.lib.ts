@@ -20,6 +20,7 @@ export default defineConfig({
         "@motion-canvas/2d",
         "three",
         "@motion-canvas/2d/lib/components",
+        "@motion-canvas/core/lib/signals"
       ],
     },
   },
