@@ -1,4 +1,4 @@
-import { Node, NodeProps } from "@motion-canvas/2d";
+import { Node, NodeProps, signal } from "@motion-canvas/2d";
 import { SimpleSignal, createSignal } from "@motion-canvas/core/lib/signals";
 import * as THREE from "three";
 
@@ -105,9 +105,20 @@ export class ThreeCanvas extends Node {
 export class SignalableObject3D {
   object: THREE.Object3D;
 
-  readonly position: SimpleSignal<[number, number, number], this>;
-  readonly scale: SimpleSignal<[number, number, number], this>;
-  readonly quaternion: SimpleSignal<[number, number, number, number], this>;
+  @signal()
+  public declare readonly position: SimpleSignal<
+    [number, number, number],
+    this
+  >;
+
+  @signal()
+  public declare readonly scale: SimpleSignal<[number, number, number], this>;
+
+  @signal()
+  public declare readonly quaternion: SimpleSignal<
+    [number, number, number, number],
+    this
+  >;
 
   constructor(original: THREE.Object3D) {
     this.object = original;

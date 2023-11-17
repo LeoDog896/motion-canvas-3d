@@ -23,7 +23,13 @@
     "lint:fix": "eslint . --fix",
     "prepare": "npm run build && npm run lint"
   },
-  "keywords": ["motion-canvas", "motion", "canvas", "3d", "three.js"],
+  "keywords": [
+    "motion-canvas",
+    "motion",
+    "canvas",
+    "3d",
+    "three.js"
+  ],
   "homepage": "https://github.com/LeoDog896/motion-canvas-3d#readme",
   "repository": {
     "type": "git",

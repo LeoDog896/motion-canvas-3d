@@ -1,9 +1,8 @@
-import { makeScene2D, useScene2D } from "@motion-canvas/2d/lib/scenes";
-import { waitFor } from "@motion-canvas/core/lib/flow";
+import { makeScene2D, useScene2D } from "@motion-canvas/2d";
 import { ThreeCanvas, axisAngle } from "../../src";
 
 import * as THREE from "three";
-import { easeInOutCubic, tween } from "@motion-canvas/core/lib/tweening";
+import { easeInOutCubic, tween, waitFor } from "@motion-canvas/core";
 
 export default makeScene2D(function* (view) {
   // Create your animations here
