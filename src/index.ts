@@ -39,6 +39,7 @@ export class ThreeCanvas extends Node {
    * as a feature request.
    */
   public readonly threeScene: THREE.Scene;
+  public readonly camera: SignalableObject3D;
   public readonly threeCamera: THREE.PerspectiveCamera;
   public readonly objects: SignalableObject3D[] = [];
 
@@ -61,13 +62,9 @@ export class ThreeCanvas extends Node {
       props.far ?? 1000.0,
     );
 
-    this.objects.push(new SignalableObject3D(this.threeCamera));
+    this.camera = new SignalableObject3D(this.threeCamera);
 
     this.renderer.clear(true);
-  }
-
-  get camera() {
-    return this.objects[0];
   }
 
   addDynamicObject(o: SignalableObject3D) {
@@ -88,7 +85,7 @@ export class ThreeCanvas extends Node {
   }
 
   render(context: CanvasRenderingContext2D): void {
-    for (const obj of this.objects) {
+    for (const obj of [this.camera, ...this.objects]) {
       obj.update();
     }
 

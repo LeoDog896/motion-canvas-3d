@@ -41,8 +41,6 @@ export default makeScene2D(function* (view) {
     return light;
   });
 
-  yield* c.camera.position([0, 0, -2], 1);
-
   yield* box.position([-2, -2, 2], 0.5);
   yield* box.position([2, -2, 2], 0.5);
   yield* box.position([2, 2, 2], 0.5);
