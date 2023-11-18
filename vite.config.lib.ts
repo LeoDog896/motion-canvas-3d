@@ -14,6 +14,11 @@ export default defineConfig({
       name: "MotionCanvas3D",
       fileName: "motion-canvas-3d",
     },
+    minify: false,
+    target: "esnext",
+    modulePreload: {
+      polyfill: false
+    },
     rollupOptions: {
       external: [
         "@motion-canvas/core",
@@ -22,6 +27,23 @@ export default defineConfig({
         "@motion-canvas/2d/lib/components",
         "@motion-canvas/core/lib/signals"
       ],
+      output: {
+        format: "esm",
+        sourcemap: true,
+        freeze: false,
+        esModule: true,
+        generatedCode: {
+          arrowFunctions: true,
+          constBindings: true,
+          objectShorthand: false,
+          reservedNamesAsProps: true,
+          symbols: true,
+        },
+        preserveModules: true,
+        interop: "auto",
+        inlineDynamicImports: false
+      },
+
     },
   },
 });

@@ -1,4 +1,4 @@
-import { Node, NodeProps, signal } from "@motion-canvas/2d";
+import { Node, NodeProps } from "@motion-canvas/2d";
 import { SimpleSignal, createSignal } from "@motion-canvas/core/lib/signals";
 import * as THREE from "three";
 
@@ -62,7 +62,7 @@ export class ThreeCanvas extends Node {
       props.far ?? 1000.0,
     );
 
-    this.camera = new SignalableObject3D(this.threeCamera);
+    this.camera = signalableObject3D(this.threeCamera);
 
     this.renderer.clear(true);
   }
@@ -72,7 +72,7 @@ export class ThreeCanvas extends Node {
   }
 
   push(...object: THREE.Object3D[]) {
-    const signalable = object.map((o) => new SignalableObject3D(o));
+    const signalable = object.map((o) => signalableObject3D(o));
     for (const obj of signalable) {
       this.threeScene.add(obj.object);
       this.addDynamicObject(obj);
@@ -99,47 +99,33 @@ export class ThreeCanvas extends Node {
   }
 }
 
-export class SignalableObject3D {
+type Vector3 = [x: number, y: number, z: number];
+type Quaternion = [x: number, y: number, z: number, w: number];
+
+export interface SignalableObject3D {
+  position: SimpleSignal<Vector3, void>;
+  scale: SimpleSignal<Vector3, void>;
+  quaternion: SimpleSignal<Quaternion, void>;
   object: THREE.Object3D;
+  update(): void;
+}
 
-  @signal()
-  public declare readonly position: SimpleSignal<
-    [number, number, number],
-    this
-  >;
+export function signalableObject3D(object: THREE.Object3D): SignalableObject3D {
+  const positionSignal = createSignal<Vector3>([object.position.x, object.position.y, object.position.z]);
+  const scaleSignal = createSignal<Vector3>([object.scale.x, object.scale.y, object.scale.z]);
+  const quaternionSignal = createSignal<Quaternion>([object.quaternion.x, object.quaternion.y, object.quaternion.z, object.quaternion.w]);
 
-  @signal()
-  public declare readonly scale: SimpleSignal<[number, number, number], this>;
+  const update = () => {
+    object.position.set(...positionSignal());
+    object.scale.set(...scaleSignal());
+    object.quaternion.set(...quaternionSignal());
+  };
 
-  @signal()
-  public declare readonly quaternion: SimpleSignal<
-    [number, number, number, number],
-    this
-  >;
-
-  constructor(original: THREE.Object3D) {
-    this.object = original;
-    this.position = createSignal([
-      this.object.position.x,
-      this.object.position.y,
-      this.object.position.z,
-    ]);
-    this.scale = createSignal([
-      this.object.scale.x,
-      this.object.scale.y,
-      this.object.scale.z,
-    ]);
-    this.quaternion = createSignal([
-      this.object.quaternion.x,
-      this.object.quaternion.y,
-      this.object.quaternion.z,
-      this.object.quaternion.w,
-    ]);
-  }
-
-  update() {
-    this.object.position.set(...this.position());
-    this.object.scale.set(...this.scale());
-    this.object.quaternion.set(...this.quaternion());
-  }
+  return {
+    object,
+    position: positionSignal,
+    scale: scaleSignal,
+    quaternion: quaternionSignal,
+    update,
+  };
 }
