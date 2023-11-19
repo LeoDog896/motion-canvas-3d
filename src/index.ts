@@ -106,6 +106,7 @@ export interface SignalableObject3D {
   position: SimpleSignal<Vector3, void>;
   scale: SimpleSignal<Vector3, void>;
   quaternion: SimpleSignal<Quaternion, void>;
+  lookAt: SimpleSignal<Vector3 | undefined, void>;
   object: THREE.Object3D;
   update(): void;
 }
@@ -114,11 +115,18 @@ export function signalableObject3D(object: THREE.Object3D): SignalableObject3D {
   const positionSignal = createSignal<Vector3>([object.position.x, object.position.y, object.position.z]);
   const scaleSignal = createSignal<Vector3>([object.scale.x, object.scale.y, object.scale.z]);
   const quaternionSignal = createSignal<Quaternion>([object.quaternion.x, object.quaternion.y, object.quaternion.z, object.quaternion.w]);
+  const lookAtSignal = createSignal<Vector3 | undefined>(undefined);
 
   const update = () => {
     object.position.set(...positionSignal());
     object.scale.set(...scaleSignal());
-    object.quaternion.set(...quaternionSignal());
+    const lookAt = lookAtSignal();
+    if (lookAt) {
+      // TODO: do something about quaternions
+      object.lookAt(...lookAt);
+    } else {
+      object.quaternion.set(...quaternionSignal());
+    }
   };
 
   return {
@@ -126,6 +134,7 @@ export function signalableObject3D(object: THREE.Object3D): SignalableObject3D {
     position: positionSignal,
     scale: scaleSignal,
     quaternion: quaternionSignal,
+    lookAt: lookAtSignal,
     update,
   };
 }
