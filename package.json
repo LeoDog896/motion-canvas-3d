@@ -1,6 +1,6 @@
 {
   "name": "motion-canvas-3d",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "3D renderer for motion-canvas",
   "files": [
     "dist"
